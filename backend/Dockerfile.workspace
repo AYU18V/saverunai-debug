@@ -1,0 +1,11 @@
+# Controlled development image for persistent Web IDE workspaces. Build it locally;
+# the application never pulls an unpinned `latest` tag at runtime.
+FROM node:22.14.0-bookworm-slim
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3.11 python3-pip openjdk-17-jdk-headless build-essential git bash ca-certificates \
+    && rm -rf /var/lib/apt/lists/* \
+    && useradd --create-home --uid 1000 developer
+
+WORKDIR /workspace
+CMD ["bash", "-lc", "while true; do sleep 3600; done"]
